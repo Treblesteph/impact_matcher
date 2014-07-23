@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Impact Matcher</title>
+
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+		<!-- Optional theme -->
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"> </script>
+
+		<script>
+
+ 	   			
+   				var journal_names = [];
+   				$.getJSON('journal_list.json', function(data) {
+   				$.each(data.bindings, function(i, f) {
+       			var tblRow = "<tr>" + "<td>" + f.journal.title + "</td>" + 
+        								"<td>" + f.journal.impact + "</td>" +
+          								"<td>" + f.journal.discipline + "</td>" + "</tr>"
+       			$(tblRow).appendTo("#journal_names_list tbody");
+     														});
+																});
+		</script>
+
+	</head>
+
+	<body>
+	<div class="container">
+		<h1> Impact Matcher </h1>
+		<p class="lead"> Be open, with impact. </p>
+
+		<form role="form">
+  			<div class="form-group">
+    			<label for="exampleInputJournal1">Which closed journal would you like to submit to (select from list)?</label>
+
+				<div class="wrapper">
+				<div class="profile">
+					<table id="journal_data" border="2">
+						<thead>
+							<th>Journal name</th>
+							<th>Impact factor</th>
+							<th>Discipline</th>
+						</thead>
+						<tbody>
+							
+						</tbody>
+					</table>
+				</div>
+				</div>
+
+    			<select class="form-control">
+    				<option> Journal of beetles </option>
+    				<option> Journal of kittens </option>
+    				<option> Journal of toads </option>
+    			</select>
+
+    			<label for="exampleInputDiscipline1">Or enter the discipline(s), separated by commas.</label>
+    			<input type="discipline" class="form-control" id="exampleInputDiscipline1" placeholder="Enter discipline(s)">
+  			</div>
+  			<p> <button type="button" class="btn btn-info btn-lg">Find open alternatives!</button> </p>
+  			
+    			</label>
+  			</div>
+		</form>
+	</body>
+	</div>
+</html>
