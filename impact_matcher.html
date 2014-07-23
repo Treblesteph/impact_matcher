@@ -3,34 +3,39 @@
 	<head>
 		<title>Impact Matcher</title>
 
-		<!-- Latest compiled and minified CSS -->
 		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 
-		<!-- Optional theme -->
 		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
 
-		<!-- Latest compiled and minified JavaScript -->
 		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
-		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"> </script>
+		<script type="text/javascript" src="jquery.min.js"> </script>
 
 		<script>
-
- 	   			
+			var journals;
+			var populate = function(){
    				var journal_names = [];
    				$.getJSON('journal_list.json', function(data) {
-   				$.each(data.bindings, function(i, f) {
-       			var tblRow = "<tr>" + "<td>" + f.journal.title + "</td>" + 
-        								"<td>" + f.journal.impact + "</td>" +
-          								"<td>" + f.journal.discipline + "</td>" + "</tr>"
-       			$(tblRow).appendTo("#journal_names_list tbody");
-     														});
-																});
+	   				$.each(data.results.bindings, function(i, f) {
+		       			var tblRow = "<tr>" + "<td>" + f.title.value + "</td>" + 
+		       						 "<td>" + f.impact.value + "</td>" +
+		       						 "<td>" + f.discipline.value + "</td>" + "</tr>";
+	    				$(tblRow).appendTo("#journal_names_list tbody");
+	    				if (!journals[f.title.value]){
+	    					journals[f.title.value] = {
+	    						impact: f.impact.value,
+	    						disciplines: [f.discipline.value]
+	    					}
+	    				} else
+	    				journals
+					});
+				});
+			}
 		</script>
 
 	</head>
 
-	<body>
+	<body onload="populate();">
 	<div class="container">
 		<h1> Impact Matcher </h1>
 		<p class="lead"> Be open, with impact. </p>
@@ -41,7 +46,7 @@
 
 				<div class="wrapper">
 				<div class="profile">
-					<table id="journal_data" border="2">
+					<table id="journal_names_list" border="2">
 						<thead>
 							<th>Journal name</th>
 							<th>Impact factor</th>
