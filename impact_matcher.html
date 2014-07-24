@@ -26,10 +26,17 @@
 	    						impact: f.impact.value,
 	    						disciplines: [f.discipline.value]
 	    					}
-	    				} else
-	    				journals
+	    				} else {
+	    					var thisJournal = journals[f.title.value];
+	    					thisJournal.disciplines.push(f.discipline.value);
+	    					// TODO: If impact factors are different, maybe it is actually a different journal with the same name. Should check for this.
+	    				}
 					});
 				});
+				for (j in journals.keys) {
+					var opt = "<option>" + j + "</option>";
+					$(opt).appendTo("#journals-dropdown")
+				}
 			}
 		</script>
 
@@ -59,11 +66,7 @@
 				</div>
 				</div>
 
-    			<select class="form-control">
-    				<option> Journal of beetles </option>
-    				<option> Journal of kittens </option>
-    				<option> Journal of toads </option>
-    			</select>
+    			<select class="form-control" id="journals-dropdown"></select>
 
     			<label for="exampleInputDiscipline1">Or enter the discipline(s), separated by commas.</label>
     			<input type="discipline" class="form-control" id="exampleInputDiscipline1" placeholder="Enter discipline(s)">
